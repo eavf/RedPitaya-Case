@@ -22,7 +22,7 @@ screw_base_dia=8.2;
 
 base_headroom=1;
 shield_mount_thick=1;  // The thickness of the two shielding flaps on top of each other.
-board_thick=1.65;
+board_thick=1.65;       //Standard 1.65
 above_shield=stand_b + board_thick + stand_t + shield_mount_thick;
 
 base_t=above_shield + base_headroom;
@@ -68,8 +68,10 @@ module standoffs() {
 }
 
 // Parts mounted on the RedPitaya
+// Otvory na konektory
 module connector13x2() {
-    color("DarkSlateGray") cube([40.6 + 2 * 0.5, 8.8 + 2 * 0.3, connector_height + 1]);
+    //GPIO - upravené by EAVF
+    color("DarkSlateGray") cube([40.6 + 2 * 0.5, 8.8 + 2 * 0.3, connector_height + case_thick]);
 }
 module ethernet() {
     // we go 'underground' as we need to poke space into the case
@@ -166,7 +168,7 @@ module cased_volume() {
 }
 
 module heatsink_support() {
-    assign (extra_len= 1.41 * heatsink_extra_space) {
+    let (extra_len= 1.41 * heatsink_extra_space) {
        translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
        translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
    }
@@ -274,6 +276,15 @@ module print() {
     translate([31, 0, 0]) rotate([0, 0, -45]) standoffs();
 }
 
+module cover() {
+    difference() {
+	//color ("red",0.1)case();
+	//translate([0, 0, stand_b]) RedPitaya();
+    }
+    color ("green",0.6)rotate ([180,0,0]) translate ([-14.5,-34,-17]) import ("Bottom.STL");
+}
+
 // View RP separately
 //RedPitaya();
-print();
+//print();
+cover ();
