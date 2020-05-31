@@ -9,7 +9,7 @@ case_thick=1.5;
 
 // rounded: pretty for printing, but without much faster for development.
 // Also, might create trouble with 'liftoff'
-rounded=true;
+rounded=false;
 
 stand_b=5;   // Standoff bottom
 stand_t=6;   // Standoff top (above board, below shield)
@@ -22,7 +22,7 @@ screw_base_dia=8.2;
 
 base_headroom=1;
 shield_mount_thick=1;  // The thickness of the two shielding flaps on top of each other.
-board_thick=1.65;
+board_thick=1.65;       //Standard 1.65
 above_shield=stand_b + board_thick + stand_t + shield_mount_thick;
 
 base_t=above_shield + base_headroom;
@@ -68,6 +68,7 @@ module standoffs() {
 }
 
 // Parts mounted on the RedPitaya
+// Otvory na konektory GPIO
 module connector13x2() {
     color("DarkSlateGray") cube([40.6 + 2 * 0.5, 8.8 + 2 * 0.3, connector_height + 1]);
 }
@@ -166,7 +167,7 @@ module cased_volume() {
 }
 
 module heatsink_support() {
-    assign (extra_len= 1.41 * heatsink_extra_space) {
+    let (extra_len= 1.41 * heatsink_extra_space) {
        translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
        translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
    }
